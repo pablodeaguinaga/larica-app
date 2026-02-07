@@ -5,8 +5,7 @@ import type { Cafe } from "@/lib/data";
 import { CafeCard } from "@/components/CafeCard";
 import { Navbar } from "@/components/Navbar";
 import { useState, useEffect } from "react";
-import { getCafesFromSheet } from "@/utils/sheets";
-import { MapPin, ToggleLeft, ToggleRight, Star, Coffee } from "lucide-react"; // Nuevas importaciones de iconos
+import { MapPin, ToggleLeft, ToggleRight, Star, Coffee } from "lucide-react";
 
 const MapView = dynamic(() => import("./MapView").then(mod => mod.MapView), { // Corregido para extraer el named export
   ssr: false,
@@ -32,30 +31,13 @@ function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
   return R * c; // Distancia en km
 }
 
-export function HomeClient() {
-  const [cafes, setCafes] = useState<Cafe[]>([]);
+export function HomeClient({ cafes }: { cafes: Cafe[] }) {
   const [selectedCafeId, setSelectedCafeId] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [filterWorkable, setFilterWorkable] = useState(false);
   const [sortBy, setSortBy] = useState<'rating' | 'flatWhite' | 'distance'>('rating');
 
   useEffect(() => {
-    async function loadCafes() {
-      try {
-        setLoading(true);
-        const fetchedCafes = await getCafesFromSheet();
-        setCafes(fetchedCafes);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error loading cafes from sheet:", err);
-        setError("Error al cargar los cafés. Por favor, inténtalo de nuevo más tarde.");
-        setLoading(false);
-      }
-    }
-    loadCafes();
-
     // Geolocalización automática al cargar el componente
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -64,15 +46,13 @@ export function HomeClient() {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           });
-          // No cambiar sortBy aquí, la lista debe seguir ordenada por rating por defecto
         },
         (err) => {
           console.error("Error getting initial user location:", err);
-          // Manejo silencioso: no alertar al usuario si deniega el permiso al inicio
         }
       );
     }
-  }, []); // Array de dependencias vacío para que se ejecute solo una vez
+  }, []);
 
   const handleGetLocation = () => {
     // Si la ubicación del usuario ya está disponible, simplemente cambia el orden
@@ -100,24 +80,6 @@ export function HomeClient() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-xl text-coffee-ink">Cargando cafés... ☕</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-red-600">
-        <p className="text-xl">{error}</p>
-      </div>
-    );
-  }
-
-  // Lógica de filtrado y ordenamiento se implementará en la siguiente fase
-  // Lógica de filtrado y ordenamiento
   const filteredCafes = filterWorkable ? cafes.filter((c) => c.workable) : cafes;
 
   const cafesWithDistance = filteredCafes.map((cafe) => {
@@ -214,6 +176,7 @@ export function HomeClient() {
                 cafe={c}
                 onSelectCafe={setSelectedCafeId}
                 selectedCafeId={selectedCafeId}
+                distanceKm={c.distanceKm ?? null}
               />
             ))}
           </div>

@@ -36,6 +36,7 @@ export function HomeClient({ cafes }: { cafes: Cafe[] }) {
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [filterWorkable, setFilterWorkable] = useState(false);
   const [sortBy, setSortBy] = useState<'rating' | 'flatWhite' | 'distance'>('rating');
+  const [visibleCount, setVisibleCount] = useState(10);
 
   useEffect(() => {
     // Geolocalización automática al cargar el componente
@@ -53,6 +54,11 @@ export function HomeClient({ cafes }: { cafes: Cafe[] }) {
       );
     }
   }, []);
+
+  // Reset visible count when filter or sort changes
+  useEffect(() => {
+    setVisibleCount(10);
+  }, [filterWorkable, sortBy]);
 
   const handleGetLocation = () => {
     // Si la ubicación del usuario ya está disponible, simplemente cambia el orden
@@ -170,7 +176,7 @@ export function HomeClient({ cafes }: { cafes: Cafe[] }) {
           </div>
 
           <div className="space-y-3 pb-6">
-            {filteredAndSortedCafes.map((c) => (
+            {filteredAndSortedCafes.slice(0, visibleCount).map((c) => (
               <CafeCard
                 key={c.id}
                 cafe={c}
@@ -180,6 +186,16 @@ export function HomeClient({ cafes }: { cafes: Cafe[] }) {
               />
             ))}
           </div>
+
+          {visibleCount < filteredAndSortedCafes.length && (
+            <button
+              type="button"
+              onClick={() => setVisibleCount((prev) => prev + 10)}
+              className="w-full rounded-2xl border border-coffee-ink/15 bg-white/60 py-3 text-sm font-medium text-coffee-ink transition hover:bg-coffee-cream/60"
+            >
+              Ver más cafés...
+            </button>
+          )}
         </section>
 
         <section className="lg:sticky lg:top-[4.5rem] lg:self-start">

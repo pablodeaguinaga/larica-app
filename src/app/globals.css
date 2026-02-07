@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fbf7f2;
+  --foreground: #1f160f;
+  --coffee-paper: #fbf7f2;
+  --coffee-cream: #f3e7d8;
+  --coffee-ink: #1f160f;
+  --coffee-accent: #b45309; /* amber-700-ish */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-coffee-paper: var(--coffee-paper);
+  --color-coffee-cream: var(--coffee-cream);
+  --color-coffee-ink: var(--coffee-ink);
+  --color-coffee-accent: var(--coffee-accent);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0b0a08;
+    --foreground: #f4efe8;
+    --coffee-paper: #0b0a08;
+    --coffee-cream: #14110c;
+    --coffee-ink: #f4efe8;
+    --coffee-accent: #f59e0b; /* amber-500-ish */
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.leaflet-container {
+  font: inherit;
+}

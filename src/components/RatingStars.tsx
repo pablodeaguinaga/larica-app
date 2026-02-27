@@ -17,7 +17,7 @@ export function RatingStars({
     return (
       <div className="flex items-center gap-2 text-sm text-coffee-ink/60">
         <span className="font-medium tabular-nums">—</span>
-        <span className="text-xs">sin calificación</span>
+        <span className="text-xs">no rating</span>
       </div>
     );
   }

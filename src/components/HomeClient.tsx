@@ -11,7 +11,7 @@ const MapView = dynamic(() => import("./MapView").then(mod => mod.MapView), { //
   ssr: false,
   loading: () => (
     <div className="h-[calc(100vh-3.5rem)] w-full animate-pulse rounded-2xl border border-coffee-ink/10 bg-white/40">
-      <p className="flex h-full items-center justify-center text-coffee-ink">Cargando mapa... 🗺️</p>
+      <p className="flex h-full items-center justify-center text-coffee-ink">Loading map... 🗺️</p>
     </div>
   ),
 });
@@ -128,7 +128,7 @@ export function HomeClient({ cafes }: { cafes: Cafe[] }) {
               onClick={handleGetLocation}
               className="inline-flex items-center gap-1 rounded-full bg-coffee-cream px-3 py-1 text-sm font-medium text-coffee-ink ring-1 ring-coffee-ink/10 hover:bg-coffee-cream/80"
             >
-              <MapPin className="h-4 w-4" /> Cerca de mí
+              <MapPin className="h-4 w-4" /> Near me
             </button>
 
             <button
@@ -144,7 +144,7 @@ export function HomeClient({ cafes }: { cafes: Cafe[] }) {
               ) : (
                 <ToggleLeft className="h-4 w-4" />
               )}{" "}
-              Solo Workable
+              Workable only
             </button>
 
             <div className="flex gap-2">
@@ -156,7 +156,7 @@ export function HomeClient({ cafes }: { cafes: Cafe[] }) {
                     : "bg-zinc-100 text-zinc-600 ring-1 ring-zinc-200 hover:bg-zinc-200"
                 }`}
               >
-                <Star className="h-4 w-4" /> Mejor Rating
+                <Star className="h-4 w-4" /> Top Rated
               </button>
               <button
                 onClick={() => setSortBy('flatWhite')}
@@ -166,13 +166,13 @@ export function HomeClient({ cafes }: { cafes: Cafe[] }) {
                     : "bg-zinc-100 text-zinc-600 ring-1 ring-zinc-200 hover:bg-zinc-200"
                 }`}
               >
-                <Coffee className="h-4 w-4" /> Mejor Flat White
+                <Coffee className="h-4 w-4" /> Best Flat White
               </button>
             </div>
           </div>
 
           <div className="text-center text-sm italic text-gray-600 p-4">
-            Estos ratings son 100% subjetivos. Pudieron verse influenciados por el humor, tiempo de estancia, horario y plática de Sofi🚙 y Pablo🌊 durante su visita.
+            These ratings are 100% subjective. They may have been influenced by the mood, length of stay, time of day, and conversation of Sofi🚙 and Pablo🌊 during their visit.
           </div>
 
           <div className="space-y-3 pb-6">
@@ -193,7 +193,7 @@ export function HomeClient({ cafes }: { cafes: Cafe[] }) {
               onClick={() => setVisibleCount((prev) => prev + 10)}
               className="w-full rounded-2xl border border-coffee-ink/15 bg-white/60 py-3 text-sm font-medium text-coffee-ink transition hover:bg-coffee-cream/60"
             >
-              Ver más cafés...
+              Load more cafes...
             </button>
           )}
         </section>

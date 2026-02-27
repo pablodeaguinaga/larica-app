@@ -41,7 +41,7 @@ export function CafeCard({
             <RatingStars rating={cafe.ratings.total} />
             {distanceKm != null && ( // Mostrar distancia si está presente
               <div className="mt-1 flex items-center gap-1 text-sm text-coffee-ink/60">
-                <MapPin className="h-3.5 w-3.5" /> a {distanceKm.toFixed(1)} km
+                <MapPin className="h-3.5 w-3.5" /> {distanceKm.toFixed(1)} km away
               </div>
             )}
           </div>

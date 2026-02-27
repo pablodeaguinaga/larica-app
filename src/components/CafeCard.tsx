@@ -1,4 +1,4 @@
-import type { Cafe } from "@/lib/data";
+import type { Cafe } from "@/lib/types";
 import { CheckCircle, XCircle, Coffee, MapPin } from "lucide-react"; // Añadido MapPin
 import { RatingStars } from "./RatingStars";
 

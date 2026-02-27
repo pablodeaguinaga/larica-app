@@ -2,7 +2,7 @@
 
 import "leaflet/dist/leaflet.css";
 
-import type { Cafe } from "@/lib/data";
+import type { Cafe } from "@/lib/types";
 import L from "leaflet";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet"; // Cambiado CircleMarker por Marker
 import { useEffect, useRef } from "react";

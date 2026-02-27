@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import type { Cafe } from "@/lib/data";
+import type { Cafe } from "@/lib/types";
 import { CafeCard } from "@/components/CafeCard";
 import { Navbar } from "@/components/Navbar";
 import { useState, useEffect } from "react";
@@ -205,4 +205,3 @@ export function HomeClient({ cafes }: { cafes: Cafe[] }) {
     </div>
   );
 }
-

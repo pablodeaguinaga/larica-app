@@ -1,13 +1,16 @@
 import { HomeClient } from "@/components/HomeClient";
-import { cafes } from "@/lib/data";
+import { getCafesFromSheet } from "@/utils/sheets";
 
-function byRatingDesc(a: (typeof cafes)[number], b: (typeof cafes)[number]) {
+export const dynamic = "force-dynamic";
+
+function byRatingDesc(a: Awaited<ReturnType<typeof getCafesFromSheet>>[number], b: Awaited<ReturnType<typeof getCafesFromSheet>>[number]) {
   const ra = a.ratings.total ?? -Infinity;
   const rb = b.ratings.total ?? -Infinity;
   return rb - ra;
 }
 
-export default function Home() {
+export default async function Home() {
+  const cafes = await getCafesFromSheet();
   const sorted = [...cafes].sort(byRatingDesc);
 
   return <HomeClient cafes={sorted} />;
